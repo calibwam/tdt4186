@@ -38,6 +38,7 @@ public class CustomerQueue {
     	if(customerEnd+1 == customerQueue.length){
     		customerEnd = 0;
     		customerQueue[customerEnd] = customer;
+    		gui.fillLoungeChair(customerEnd, customer);
     	}
     	else{
     		customerQueue[++customerEnd] = customer;
@@ -49,6 +50,7 @@ public class CustomerQueue {
     public synchronized Customer takeCustomerFromQueue() throws Exception{
     	if(customerStart != -1){
 	    	Customer customer = customerQueue[customerStart];
+    		gui.emptyLoungeChair(customerStart);
 	    	if(customerStart == customerEnd){
 	    		customerStart = -1;
 	    		customerEnd = -1;
