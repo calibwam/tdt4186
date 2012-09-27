@@ -33,7 +33,7 @@ public class CustomerQueue {
     
     public synchronized void addCustomerToQueue(Customer customer) throws Exception{
     	if((customerStart == 0 && customerEnd == customerQueue.length-1)||(customerStart-1==customerEnd)){
-    		throw new Exception();
+    		throw new IllegalAccessError();
     	}
     	if(customerEnd+1 == customerQueue.length){
     		customerEnd = 0;

@@ -45,7 +45,6 @@ public class Doorman extends Thread{
 				customerQueue.addCustomerToQueue(new Customer());
 			} catch (Exception e) {
 				// TODO Auto-generated catch block
-				e.printStackTrace();
 				gui.println("Queue is full.");
 			}
 		}
