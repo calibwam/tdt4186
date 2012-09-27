@@ -40,6 +40,7 @@ public class Barber extends Thread {
 	public void run(){
 		while(running){
 			try {
+				gui.barberIsSleeping(barberid);
 				sleep((long) (Globals.barberSleep*Math.random()));
 			} catch (InterruptedException e1) {
 				// TODO Auto-generated catch block
@@ -51,6 +52,7 @@ public class Barber extends Thread {
 				gui.println("No customers in queue.");
 				continue;
 			}
+			gui.barberIsAwake(barberid);
 			gui.fillBarberChair(barberid, customer);
 			try {
 				sleep((long) (Globals.barberWork*Math.random()));
