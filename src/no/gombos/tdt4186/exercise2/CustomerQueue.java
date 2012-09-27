@@ -56,7 +56,7 @@ public class CustomerQueue {
 	    		customerEnd = -1;
 	    	}
 	    	else{
-	    		customerStart++;
+	    		customerStart = (customerStart+1)%customerQueue.length;
 	    	}
 	    	return customer;
     	}
