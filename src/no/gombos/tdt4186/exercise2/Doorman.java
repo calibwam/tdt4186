@@ -23,7 +23,6 @@ public class Doorman extends Thread{
 	 * Starts the doorman running as a separate thread.
 	 */
 	public void startThread() {
-		// Incomplete
 		running = true;
 		start();
 	}
@@ -32,7 +31,6 @@ public class Doorman extends Thread{
 	 * Stops the doorman thread.
 	 */
 	public void stopThread() {
-		// Incomplete
 		running = false;
 	}
 	
@@ -48,6 +46,7 @@ public class Doorman extends Thread{
 			} catch (Exception e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
+				gui.println("Queue is full.");
 			}
 		}
 	}
