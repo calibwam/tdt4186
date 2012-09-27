@@ -4,6 +4,9 @@ package no.gombos.tdt4186.exercise2;
  * Barbershop thread synchronization example.
  */
 public class Barber {
+	
+	
+	
 	/**
 	 * Creates a new barber.
 	 * @param queue		The customer queue.

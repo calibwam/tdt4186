@@ -4,9 +4,10 @@ package no.gombos.tdt4186.exercise2;
  * This class implements the doorman's part of the
  * Barbershop thread synchronization example.
  */
-public class Doorman {
+public class Doorman extends Thread{
 	private Gui gui;
 	private CustomerQueue customerQueue;
+	private boolean running;
 	
 	/**
 	 * Creates a new doorman.
@@ -23,6 +24,8 @@ public class Doorman {
 	 */
 	public void startThread() {
 		// Incomplete
+		running = true;
+		start();
 	}
 
 	/**
@@ -30,6 +33,23 @@ public class Doorman {
 	 */
 	public void stopThread() {
 		// Incomplete
+		running = false;
+	}
+	
+	public void run(){
+		while(running){
+			try {
+				sleep((long)(Globals.doormanSleep*Math.random()));
+			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+			}
+			try {
+				customerQueue.addCustomerToQueue(new Customer());
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
 	}
 
 	// Add more methods as needed
