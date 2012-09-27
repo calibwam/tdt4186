@@ -42,7 +42,7 @@ public class CustomerQueue {
     	}
     	else{
     		customerQueue[++customerEnd] = customer;
-    		gui.fillLoungeChair(customerEnd-1, customer);
+    		gui.fillLoungeChair(customerEnd, customer);
     		if(customerStart == -1) customerStart = 0;
     	}
     }

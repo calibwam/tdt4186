@@ -37,6 +37,29 @@ public class Barber extends Thread {
 		running = false;
 	}
 
-	// Add more methods as needed
+	public void run(){
+		while(running){
+			try {
+				sleep((long) (Globals.barberSleep*Math.random()));
+			} catch (InterruptedException e1) {
+				// TODO Auto-generated catch block
+			}
+			Customer customer;
+			try {
+				customer = customerQueue.takeCustomerFromQueue();
+			} catch (Exception e) {
+				gui.println("No customers in queue.");
+				continue;
+			}
+			gui.fillBarberChair(barberid, customer);
+			try {
+				sleep((long) (Globals.barberWork*Math.random()));
+			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+			}
+			gui.emptyBarberChair(barberid);
+			
+		}
+	}
 }
 
