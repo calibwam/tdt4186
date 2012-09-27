@@ -13,7 +13,6 @@ public class CustomerQueue {
 	private Customer[] customerQueue;
 	private int customerStart;
 	private int customerEnd;
-	private boolean queueFull;
 	
 	private Gui gui;
 	
@@ -22,7 +21,6 @@ public class CustomerQueue {
     	customerStart = -1;
     	customerEnd = -1;
     	this.gui = gui;
-    	queueFull = false;
 	}
     
     public int getCustomerStart(){
@@ -33,12 +31,9 @@ public class CustomerQueue {
     	return customerEnd;
     }
     
-    public synchronized void addCustomerToQueue(Customer customer)/* throws Exception*/{
-    	if (queueFull == true) {
-    		return;
-    	}
+    public synchronized void addCustomerToQueue(Customer customer) throws Exception{
     	if((customerStart == 0 && customerEnd == customerQueue.length-1)||(customerStart-1==customerEnd)){
-    		queueFull = true;
+    		throw new IllegalAccessError();
     	}
     	if(customerEnd+1 == customerQueue.length){
     		customerEnd = 0;
@@ -63,7 +58,6 @@ public class CustomerQueue {
 	    	else{
 	    		customerStart = (customerStart+1)%customerQueue.length;
 	    	}
-	    	queueFull = false;
 	    	return customer;
     	}
     	throw new Exception();
