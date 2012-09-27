@@ -45,11 +45,13 @@ public class Barber extends Thread {
 				sleep((long) (Globals.barberSleep*Math.random()));
 			} catch (InterruptedException e1) {
 				// TODO Auto-generated catch block
+				e1.printStackTrace();
 			}
 			Customer customer;
 			try {
 				customer = customerQueue.takeCustomerFromQueue();
 			} catch (Exception e) {
+				e.printStackTrace();
 				gui.println("No customers in queue.");
 				continue;
 			}
@@ -59,6 +61,7 @@ public class Barber extends Thread {
 				sleep((long) (Globals.barberWork*Math.random()));
 			} catch (InterruptedException e) {
 				// TODO Auto-generated catch block
+				e.printStackTrace();
 			}
 			gui.emptyBarberChair(barberid);
 			

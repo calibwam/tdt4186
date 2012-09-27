@@ -40,11 +40,13 @@ public class Doorman extends Thread{
 				sleep((long)(Globals.doormanSleep*Math.random()));
 			} catch (InterruptedException e) {
 				// TODO Auto-generated catch block
+				e.printStackTrace();
 			}
 			try {
 				customerQueue.addCustomerToQueue(new Customer());
 			} catch (Exception e) {
 				// TODO Auto-generated catch block
+				e.printStackTrace();
 				gui.println("Queue is full.");
 			}
 		}
