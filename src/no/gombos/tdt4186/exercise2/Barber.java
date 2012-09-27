@@ -41,6 +41,7 @@ public class Barber extends Thread {
 		while(running){
 			try {
 				gui.barberIsSleeping(barberid);
+				gui.println("Barber " + barberid + " is day dreaming.");
 				sleep((long) (Globals.barberSleep*Math.random()));
 			} catch (InterruptedException e1) {
 				// TODO Auto-generated catch block
