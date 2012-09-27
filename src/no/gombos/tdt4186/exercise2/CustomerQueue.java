@@ -17,7 +17,6 @@ public class CustomerQueue {
 	private Gui gui;
 	
     public CustomerQueue(int queueLength, Gui gui) {
-		// Incomplete
     	customerQueue = new Customer[queueLength];
     	customerStart = -1;
     	customerEnd = -1;
@@ -32,16 +31,34 @@ public class CustomerQueue {
     	return customerEnd;
     }
     
-    public synchronized void addCustomerToQueue(Customer customer){
-    	if(customerEnd+1 != customerStart){
+    public synchronized void addCustomerToQueue(Customer customer) throws Exception{
+    	if((customerStart == 0 && customerEnd == customerQueue.length-1)||(customerStart-1==customerEnd)){
+    		throw new Exception();
+    	}
+    	if(customerEnd+1 == customerQueue.length){
+    		customerEnd = 0;
+    		customerQueue[customerEnd] = customer;
+    	}
+    	else{
     		customerQueue[++customerEnd] = customer;
     		gui.fillLoungeChair(customerEnd-1, customer);
     		if(customerStart == -1) customerStart = 0;
     	}
     }
     
-    public synchronized Customer takeCustomerFromQueue(){
-    	return customerQueue[customerStart++];
+    public synchronized Customer takeCustomerFromQueue() throws Exception{
+    	if(customerStart != -1){
+	    	Customer customer = customerQueue[customerStart];
+	    	if(customerStart == customerEnd){
+	    		customerStart = -1;
+	    		customerEnd = -1;
+	    	}
+	    	else{
+	    		customerStart++;
+	    	}
+	    	return customer;
+    	}
+    	throw new Exception();
     }
 
 }

@@ -5,7 +5,8 @@ package no.gombos.tdt4186.exercise2;
  * Barbershop thread synchronization example.
  */
 public class Doorman {
-	Gui gui;
+	private Gui gui;
+	private CustomerQueue customerQueue;
 	
 	/**
 	 * Creates a new doorman.
@@ -14,6 +15,7 @@ public class Doorman {
 	 */
 	public Doorman(CustomerQueue queue, Gui gui) { 
 		this.gui = gui;
+		this.customerQueue = queue;
 	}
 
 	/**
