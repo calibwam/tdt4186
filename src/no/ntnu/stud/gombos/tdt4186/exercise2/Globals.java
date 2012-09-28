@@ -1,4 +1,4 @@
-package no.gombos.tdt4186.exercise2;
+package no.ntnu.stud.gombos.tdt4186.exercise2;
 
 /**
  * Class containing three globally available variables modified by the GUI

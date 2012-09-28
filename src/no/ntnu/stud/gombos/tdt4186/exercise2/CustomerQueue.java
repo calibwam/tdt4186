@@ -1,4 +1,4 @@
-package no.gombos.tdt4186.exercise2;
+package no.ntnu.stud.gombos.tdt4186.exercise2;
 
 /**
  * This class implements a queue of customers as a circular buffer.
@@ -13,6 +13,7 @@ public class CustomerQueue {
 	private Customer[] customerQueue;
 	private int customerStart;
 	private int customerEnd;
+	private int register;
 	
 	private Gui gui;
 	
@@ -61,6 +62,14 @@ public class CustomerQueue {
 	    	return customer;
     	}
     	throw new Exception();
+    }
+    
+    public synchronized void takePaymentFromCustomer(){
+    	register++;
+    }
+    
+    public synchronized int getHowManyCustomersWhoHavePayedYo(){
+    	return register;
     }
 
 }

@@ -1,4 +1,4 @@
-package no.gombos.tdt4186.exercise2;
+package no.ntnu.stud.gombos.tdt4186.exercise2;
 
 import java.awt.*;
 import java.awt.event.*;

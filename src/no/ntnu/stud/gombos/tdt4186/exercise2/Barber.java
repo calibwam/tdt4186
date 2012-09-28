@@ -1,4 +1,4 @@
-package no.gombos.tdt4186.exercise2;
+package no.ntnu.stud.gombos.tdt4186.exercise2;
 /**
  * This class implements the barber's part of the
  * Barbershop thread synchronization example.
@@ -61,6 +61,7 @@ public class Barber extends Thread {
 			} catch (InterruptedException e) {
 				// TODO Auto-generated catch block
 			}
+			customerQueue.takePaymentFromCustomer();
 			gui.emptyBarberChair(barberid);
 			
 		}
