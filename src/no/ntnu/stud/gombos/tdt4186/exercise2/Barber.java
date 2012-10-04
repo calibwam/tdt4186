@@ -41,19 +41,15 @@ public class Barber extends Thread {
 		while(running){
 			try {
 				gui.barberIsSleeping(barberid);
-				gui.println("Barber " + barberid + " is day dreaming.");
+				gui.println("Barber " + (barberid+1) + " is day dreaming.");
 				sleep((long) (Globals.barberSleep*Math.random()));
 			} catch (InterruptedException e1) {
 				// TODO Auto-generated catch block
 				e1.printStackTrace();
 			}
+			
 			Customer customer;
-			try {
-				customer = customerQueue.takeCustomerFromQueue();
-			} catch (Exception e) {
-				gui.println("No customers in queue.");
-				continue;
-			}
+			customer = customerQueue.takeCustomerFromQueue();
 			gui.barberIsAwake(barberid);
 			gui.fillBarberChair(barberid, customer);
 			try {

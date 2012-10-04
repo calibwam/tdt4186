@@ -41,12 +41,7 @@ public class Doorman extends Thread{
 			} catch (InterruptedException e) {
 				// TODO Auto-generated catch block
 			}
-			try {
-				customerQueue.addCustomerToQueue(new Customer());
-			} catch (Exception e) {
-				// TODO Auto-generated catch block
-				gui.println("Queue is full.");
-			}
+			customerQueue.addCustomerToQueue(new Customer());
 		}
 	}
 

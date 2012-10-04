@@ -32,13 +32,13 @@ public class CustomerQueue {
     	return customerEnd;
     }
     
-    public synchronized void addCustomerToQueue(Customer customer) throws Exception{
+    public synchronized void addCustomerToQueue(Customer customer) {
     	if((customerStart == 0 && customerEnd == customerQueue.length-1)||(customerStart-1==customerEnd)){
     		try { 
     			gui.println("Queue is full.");
     			wait(); 
     		} catch(InterruptedException e) { 
-    			System.out.println("InterruptedException caught in add-method"); 
+    			System.out.println("InterruptedException caught in add"); 
     		}
     	}
     	if(customerEnd+1 == customerQueue.length){
@@ -57,13 +57,13 @@ public class CustomerQueue {
     public synchronized Customer takeCustomerFromQueue() {
     		if(customerStart == -1) {
     			try { 
+    				gui.println("No customers in queue.");
     				wait(); 
     			} catch(InterruptedException e) { 
-    				System.out.println("InterruptedException caught in take-method"); 
+    				System.out.println("InterruptedException caught in take"); 
     			}
     		}
     	
-    	//    	if(customerStart != -1){
 	    	Customer customer = customerQueue[customerStart];
     		gui.emptyLoungeChair(customerStart);
 	    	if(customerStart == customerEnd){
