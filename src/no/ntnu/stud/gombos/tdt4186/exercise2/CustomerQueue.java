@@ -34,7 +34,12 @@ public class CustomerQueue {
     
     public synchronized void addCustomerToQueue(Customer customer) throws Exception{
     	if((customerStart == 0 && customerEnd == customerQueue.length-1)||(customerStart-1==customerEnd)){
-    		throw new IllegalAccessException();
+    		try { 
+    			gui.println("Queue is full.");
+    			wait(); 
+    		} catch(InterruptedException e) { 
+    			System.out.println("InterruptedException caught in add-method"); 
+    		}
     	}
     	if(customerEnd+1 == customerQueue.length){
     		customerEnd = 0;
@@ -46,10 +51,19 @@ public class CustomerQueue {
     		gui.fillLoungeChair(customerEnd, customer);
     		if(customerStart == -1) customerStart = 0;
     	}
+    	notifyAll();
     }
     
-    public synchronized Customer takeCustomerFromQueue() throws Exception{
-    	if(customerStart != -1){
+    public synchronized Customer takeCustomerFromQueue() {
+    		if(customerStart == -1) {
+    			try { 
+    				wait(); 
+    			} catch(InterruptedException e) { 
+    				System.out.println("InterruptedException caught in take-method"); 
+    			}
+    		}
+    	
+    	//    	if(customerStart != -1){
 	    	Customer customer = customerQueue[customerStart];
     		gui.emptyLoungeChair(customerStart);
 	    	if(customerStart == customerEnd){
@@ -59,9 +73,8 @@ public class CustomerQueue {
 	    	else{
 	    		customerStart = (customerStart+1)%customerQueue.length;
 	    	}
+	    	notifyAll();
 	    	return customer;
-    	}
-    	throw new Exception();
     }
     
     public synchronized void takePaymentFromCustomer(){
