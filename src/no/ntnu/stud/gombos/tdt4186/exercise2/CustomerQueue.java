@@ -55,7 +55,7 @@ public class CustomerQueue {
     }
     
     public synchronized Customer takeCustomerFromQueue() {
-    		if(customerStart == -1) {
+    		while(customerStart == -1) {
     			try { 
     				gui.println("No customers in queue.");
     				wait(); 
@@ -72,8 +72,8 @@ public class CustomerQueue {
 	    	}
 	    	else{
 	    		customerStart = (customerStart+1)%customerQueue.length;
+		    	notifyAll();
 	    	}
-	    	notifyAll();
 	    	return customer;
     }
     
