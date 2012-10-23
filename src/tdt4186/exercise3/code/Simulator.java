@@ -22,6 +22,9 @@ public class Simulator implements Constants
 	/** The average length between process arrivals */
 	private long avgArrivalInterval;
 	// Add member variables as needed
+	
+	private CPU cpu;
+	private IO io;
 
 	/**
 	 * Constructs a scheduling simulator with the given parameters.
@@ -45,6 +48,9 @@ public class Simulator implements Constants
 		memory = new Memory(memoryQueue, memorySize, statistics);
 		clock = 0;
 		// Add code as needed
+		
+		cpu = new CPU(cpuQueue, maxCpuTime, statistics, gui);
+		io = new IO(ioQueue, statistics, eventQueue, avgIoTime, gui);
     }
 
     /**
