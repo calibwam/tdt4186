@@ -47,6 +47,8 @@ public class Process implements Constants
 
 	/** The global time of the last event involving this process */
 	private long timeOfLastEvent;
+	private long endTime;
+	private long startUpTime;
 
 	/**
 	 * Creates a new process with given parameters. Other parameters are randomly
@@ -117,6 +119,17 @@ public class Process implements Constants
 	public void updateStatistics(Statistics statistics) {
 		statistics.totalTimeSpentWaitingForMemory += timeSpentWaitingForMemory;
 		statistics.nofCompletedProcesses++;
+		statistics.totalTimeInReadyQueue += timeSpentInReadyQueue;
+		statistics.totalCpuTime += this.timeSpentInCpu;
+		
+		statistics.totalTimeWaitingForIo += timeSpentWaitingForIo;
+        statistics.totalIoTime += timeSpentInIo;
+        statistics.totalNofTimesInReadyQueue += nofTimesInReadyQueue;
+        statistics.totalNofTimesInIOQueue += nofTimesInIoQueue;
+	}
+	
+	public void updateFinalStat(Statistics stats) {
+		stats.totalSystemTime += (this.endTime - this.startUpTime);
 	}
 
 	public long timeToIO() {
@@ -129,14 +142,48 @@ public class Process implements Constants
 		return cpuTimeNeeded;
 	}
 
-	public void leftCpu(long clock) {
-		// TODO Auto-generated method stub
-		
+	public synchronized void leftCpu(long clock) {
+		timeSpentInCpu += clock - timeOfLastEvent;
+		cpuTimeNeeded -= clock - timeOfLastEvent;
+		timeToNextIoOperation -= clock - timeOfLastEvent;
+		timeOfLastEvent = clock;
+		endTime = clock;
+		notifyAll();
 	}
 
-	public void enterCpuQueue(long clock) {
-		// TODO Auto-generated method stub
+	public synchronized void enterCpu(long clock) {
+		timeSpentInReadyQueue += clock - timeOfLastEvent;
+		timeOfLastEvent = clock;
+		notifyAll();
+	}
+	
+	public synchronized void enterCpuQueue(long clock){
+		nofTimesInReadyQueue++;
+		timeOfLastEvent = clock;
+		notifyAll();
+	}
+	
+	public synchronized void enterIoQueue(long clock){
+		nofTimesInIoQueue++;
+		timeSpentInReadyQueue += clock - timeOfLastEvent;
+		notifyAll();
+	}
+	
+	public synchronized void enterIo(long clock){
+		timeSpentWaitingForIo += clock - timeOfLastEvent;
+		timeOfLastEvent = clock;
+		notifyAll();
+	}
+	
+	public synchronized void leftIo(long clock){
 		
+		// save how long time we have spent in IO now
+		timeSpentInIo += clock - timeOfLastEvent;
+		
+		// find a random time to the next IO operation
+		timeToNextIoOperation = (long) (Math.random() * avgIoInterval);
+		timeOfLastEvent = clock;
+		notifyAll();
 	}
 
 	// Add more methods as needed

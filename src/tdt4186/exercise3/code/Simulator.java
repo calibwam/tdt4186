@@ -60,7 +60,7 @@ public class Simulator implements Constants
 		// TODO: You may want to extend this method somewhat.
 
 		System.out.print("Simulating...");
-		// Genererate the first process arrival event
+		// Generate the first process arrival event
 		eventQueue.insertEvent(new Event(NEW_PROCESS, 0));
 		// Process events until the simulation length is exceeded:
 		while (clock < simulationLength && !eventQueue.isEmpty()) {
@@ -181,7 +181,11 @@ public class Simulator implements Constants
 	 * Ends the active process, and deallocates any resources allocated to it.
 	 */
 	private void endProcess() {
-		// Incomplete
+		Process p = cpu.getActive();
+		p.leftCpu(clock);
+		p.updateStatistics(statistics);
+		p.updateFinalStat(statistics);
+		memory.processCompleted(p);
 	}
 
 	/**
@@ -189,7 +193,15 @@ public class Simulator implements Constants
 	 * perform an I/O operation.
 	 */
 	private void processIoRequest() {
-		// Incomplete
+		statistics.nofIoRequests++;
+		Process p = cpu.getActive();
+		p.leftCpu(clock);
+		p.enterCpu(clock);
+		if(io.addProcess(p)){
+			p.enterIo(clock);
+			eventQueue.insertEvent(new Event(END_IO, clock+io.getIoTime()));
+		}
+		switchProcess();
 	}
 
 	/**
@@ -197,7 +209,17 @@ public class Simulator implements Constants
 	 * is done with its I/O operation.
 	 */
 	private void endIoOperation() {
-		// Incomplete
+		statistics.nofCompletedIoOperations++;
+		Process p = io.getProcess();
+		p.leftIo(clock);
+		cpu.insertProcess(p);
+		p.enterCpuQueue(clock);
+		if(cpu.isIdle()) switchProcess();
+		p = io.start();
+		if(p!=null){
+			p.enterIo(clock);
+			eventQueue.insertEvent(new Event(END_IO,clock+io.getIoTime()));
+		}
 	}
 
 	/**
