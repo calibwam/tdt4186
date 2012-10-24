@@ -28,6 +28,10 @@ public class Statistics
 	public long totalNofTimesInReadyQueue = 0;
 	public long totalNofTimesInIOQueue = 0;
 	public long totalSystemTime = 0;
+	public long longestCpuQueueLength = 0;
+	public long longestIoQueueLength = 0;
+	public long cpuQueueLengthTime  = 0;
+	public long ioQueueLengthTime  = 0;
     
 	/**
 	 * Prints out a report summarizing all collected data about the simulation.
@@ -48,9 +52,9 @@ public class Statistics
     	System.out.println("Fraction of CPU time spent waiting:                             " + (float) (simulationLength - totalCpuTime) / simulationLength * 100 + " %");
     	System.out.println("Largest occuring memory queue length:                           " + memoryQueueLargestLength);
     	System.out.println("Average memory queue length:                                    " + (float) memoryQueueLengthTime / simulationLength + " %");
-    	System.out.println("Largest occuring cpu queue length:                              " + cpuQueueLargestLength);
+    	System.out.println("Largest occuring cpu queue length:                              " + longestCpuQueueLength);
     	System.out.println("Average cpu queue length:                                       " + (float) cpuQueueLengthTime / simulationLength + " %");
-    	System.out.println("Largest occuring I/O queue length:                              " + largestIoQueue);
+    	System.out.println("Largest occuring I/O queue length:                              " + longestIoQueueLength);
     	System.out.println("Average I/O queue length:                                       " + (float) ioQueueLengthTime / simulationLength + " %");
     	if (nofCompletedProcesses > 0) {
     		System.out.println("Average # of times a process has been placed in memory queue:   " + 1);

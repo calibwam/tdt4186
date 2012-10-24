@@ -61,10 +61,9 @@ public class CPU {
 	}
 	
 	public void updateTime(long timePassed) {
-//        this.statistics.cpuQueueLengthTime += this.cpuQueue.getQueueLength() * timePassed;
-//        if (this.cpuQueue.getQueueLength() > this.statistics.cpuQueueLargestLength) {
-//        	this.statistics.cpuQueueLargestLength = this.cpuQueue.getQueueLength();
-//        }
+        this.statistics.cpuQueueLengthTime += this.cpuQueue.getQueueLength() * timePassed;
+        if (this.cpuQueue.getQueueLength() > this.statistics.longestCpuQueueLength)
+        	this.statistics.longestCpuQueueLength = this.cpuQueue.getQueueLength();
     }
 
 }	

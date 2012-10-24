@@ -51,10 +51,10 @@ public class IO {
 	}
 
 	public void updateTime(long timePassed) {
-//		statistics.ioQueueLengthTime += ioQueue.getQueueLength() * timePassed;
-//		if (ioQueue.getQueueLength() > statistics.largestIOQueue) {
-//			statistics.largestIOQueue = ioQueue.getQueueLength();
-//		}
+		long l = this.ioQueue.getQueueLength();
+		statistics.ioQueueLengthTime += l*timePassed;
+		if(l > statistics.longestIoQueueLength)
+			statistics.longestIoQueueLength = l;
 	}
 	
 }
