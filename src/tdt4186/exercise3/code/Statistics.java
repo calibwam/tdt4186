@@ -17,6 +17,8 @@ public class Statistics
 	public long memoryQueueLengthTime = 0;
 	/** The largest memory queue length that has occured */
 	public long memoryQueueLargestLength = 0;
+	/** Some comment here */
+	public long nofForcedProcessSwitches = 0;
     
 	/**
 	 * Prints out a report summarizing all collected data about the simulation.

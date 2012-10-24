@@ -21,7 +21,6 @@ public class Simulator implements Constants
 	private long simulationLength;
 	/** The average length between process arrivals */
 	private long avgArrivalInterval;
-	// Add member variables as needed
 	
 	private CPU cpu;
 	private IO io;
@@ -47,7 +46,6 @@ public class Simulator implements Constants
 		eventQueue = new EventQueue();
 		memory = new Memory(memoryQueue, memorySize, statistics);
 		clock = 0;
-		// Add code as needed
 		
 		cpu = new CPU(cpuQueue, maxCpuTime, statistics, gui);
 		io = new IO(ioQueue, statistics, eventQueue, avgIoTime, gui);
@@ -75,7 +73,10 @@ public class Simulator implements Constants
 			// Let the memory unit and the GUI know that time has passed
 			memory.timePassed(timeDifference);
 			gui.timePassed(timeDifference);
-			// Deal with the event
+			cpu.updateTime(timeDifference);
+			io.updateTime(timeDifference);
+			
+//			Deal with the event
 			if (clock < simulationLength) {
 				processEvent(event);
 			}
@@ -138,14 +139,10 @@ public class Simulator implements Constants
 		// As long as there is enough memory, processes are moved from the memory queue to the cpu queue
 		while(p != null) {
 			
-			// TODO: Add this process to the CPU queue!
-			// Also add new events to the event queue if needed
 			cpu.insertProcess(p);
 			
+			if (cpu.isIdle()) switchProcess();
 
-			// Since we haven't implemented the CPU and I/O device yet,
-			// we let the process leave the system immediately, for now.
-			memory.processCompleted(p);
 			// Try to use the freed memory:
 			flushMemoryQueue();
 			// Update statistics
@@ -160,7 +157,24 @@ public class Simulator implements Constants
 	 * Simulates a process switch.
 	 */
 	private void switchProcess() {
-		// Incomplete
+		Process p = cpu.getActive();
+		
+		if (p != null) {
+			p.leftCpu(clock);
+			cpu.insertProcess(p);
+			statistics.nofForcedProcessSwitches++;
+			p.enterCpuQueue(clock);
+		}
+		
+		p = cpu.start();
+		if (p != null) {
+			if (p.timeToIO() > cpu.getMaxCpuTime() && p.getCpuTimeNeeded() > cpu.getMaxCpuTime())
+				eventQueue.insertEvent(new Event(SWITCH_PROCESS, clock + cpu.getMaxCpuTime()));
+			else if (p.timeToIO() > p.getCpuTimeNeeded())
+				eventQueue.insertEvent(new Event(END_PROCESS, clock + p.getCpuTimeNeeded()));
+			else
+				eventQueue.insertEvent(new Event(IO_REQUEST, clock + p.timeToIO()));
+		}
 	}
 
 	/**

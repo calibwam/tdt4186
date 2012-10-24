@@ -31,7 +31,9 @@ public class CPU {
 	}
     
     public boolean isIdle() {
-    	return this.activeProcess == null;
+    	boolean isIdle = false;
+    	if (this.activeProcess == null) isIdle = true;
+    	return isIdle;
     }
     
     public Process getActive() {
@@ -45,8 +47,8 @@ public class CPU {
 	}
     
 	public Process start() {
-		if (!this.cpuQueue.isEmpty()) {
-			Process p = (Process) this.cpuQueue.removeNext();
+		if (!cpuQueue.isEmpty()) {
+			Process p = (Process) cpuQueue.removeNext();
 			this.activeProcess = p;
 			gui.setCpuActive(p);
 			return p;

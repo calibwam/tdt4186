@@ -10,10 +10,10 @@ public class IO {
 	private Process activeProcess = null;
 
 
-	public IO(Queue ioQueue, Statistics statistics, EventQueue eventQueue, long ioWait, Gui g) {
+	public IO(Queue ioQueue, Statistics statistics, EventQueue eventQueue, long ioWait, Gui gui) {
 		this.ioQueue = ioQueue;
 		this.statistics = statistics;
-		this.gui = g;
+		this.gui = gui;
 		this.ioWait = ioWait;
 
 	}

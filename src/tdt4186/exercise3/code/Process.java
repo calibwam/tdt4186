@@ -119,5 +119,25 @@ public class Process implements Constants
 		statistics.nofCompletedProcesses++;
 	}
 
+	public long timeToIO() {
+		if (timeToNextIoOperation == 0) 
+			timeToNextIoOperation = (long) (Math.random() * avgIoInterval * 2 + avgIoInterval / 4);
+		return timeToNextIoOperation;
+	}
+
+	public long getCpuTimeNeeded() {
+		return cpuTimeNeeded;
+	}
+
+	public void leftCpu(long clock) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	public void enterCpuQueue(long clock) {
+		// TODO Auto-generated method stub
+		
+	}
+
 	// Add more methods as needed
 }
