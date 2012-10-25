@@ -4,8 +4,8 @@ import java.util.*;
 
 /**
  * This class maintains a queue of events used for
- * simulating the behaviour of the system. Events are
- * kept in a cronologically sorted list. This class is
+ * simulating the behavior of the system. Events are
+ * kept in a chronologically sorted list. This class is
  * an example of a priority queue (event time being the
  * priority in this case).
  */

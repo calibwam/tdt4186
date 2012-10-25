@@ -41,8 +41,8 @@ public class Statistics
 		System.out.println();
 		System.out.println("Simulation statistics:");
 		System.out.println();
-		System.out.println("Number of completed processes:                                "+nofCompletedProcesses);
-		System.out.println("Number of created processes:                                  "+nofCreatedProcesses);
+		System.out.println("Number of completed processes:                                  " +nofCompletedProcesses);
+		System.out.println("Number of created processes:                                    " +nofCreatedProcesses);
 		System.out.println("Number of (forced) process switches:                            " + nofForcedProcessSwitches);
     	System.out.println("Number of processed I/O operations:                             " + nofCompletedIoOperations);
     	System.out.println("Average throughput (processes per second):                      " + (float) nofCompletedProcesses / simulationLength * 1000);
