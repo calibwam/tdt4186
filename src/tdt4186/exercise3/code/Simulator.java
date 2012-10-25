@@ -168,6 +168,7 @@ public class Simulator implements Constants
 		
 		p = cpu.start();
 		if (p != null) {
+			p.enterCpu(clock);
 			if (p.timeToIO() > cpu.getMaxCpuTime() && p.getCpuTimeNeeded() > cpu.getMaxCpuTime())
 				eventQueue.insertEvent(new Event(SWITCH_PROCESS, clock + cpu.getMaxCpuTime()));
 			else if (p.timeToIO() > p.getCpuTimeNeeded())
