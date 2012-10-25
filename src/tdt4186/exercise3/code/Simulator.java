@@ -122,10 +122,10 @@ public class Simulator implements Constants
 		// Create a new process
 		Process newProcess = new Process(memory.getMemorySize(), clock);
 		memory.insertProcess(newProcess);
-		flushMemoryQueue();
 		// Add an event for the next process arrival
 		long nextArrivalTime = clock + 1 + (long)(2*Math.random()*avgArrivalInterval);
 		eventQueue.insertEvent(new Event(NEW_PROCESS, nextArrivalTime));
+		flushMemoryQueue();
 		// Update statistics
 		statistics.nofCreatedProcesses++;
     }
